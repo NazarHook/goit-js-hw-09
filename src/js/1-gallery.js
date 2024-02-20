@@ -1,4 +1,5 @@
+import simpleLightbox from "simplelightbox";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-const lightbox = $('.gallery a').simpleLightbox({ /* options */ });
+const lightbox = new SimpleLightbox('.gallery a' ,)
 console.log(SimpleLightbox);
