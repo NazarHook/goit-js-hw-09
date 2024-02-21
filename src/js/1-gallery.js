@@ -86,5 +86,8 @@ function createElementMarkup(images) {
     .join('');
 }
 gallery.innerHTML = createElementMarkup(images);
-const lightbox = new SimpleLightbox('.gallery a', { /* Optional options here */ });
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'description', // Використовуйте властивість 'description' для відображення підписів
+  captionDelay: 250, // Затримка для відображення підписів (можна налаштовувати)
+});
 

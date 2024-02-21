@@ -1,35 +1,41 @@
-'use strict'
-const form = document.querySelector('.feedback-form')
-const email = document.querySelector('input')
-const message = document.querySelector('textarea')
-const result = {}
+'use strict';
+
+const form = document.querySelector('.feedback-form');
+const email = document.querySelector('input');
+const message = document.querySelector('textarea');
+
 function loadHandler(event) {
-if (localStorage.length >= 1) {
-    event.preventDefault()  
-    const messageValue = localStorage.getItem('message')
-    const emailValue = localStorage.getItem('email')
-    email.value = emailValue
-    message.textContent = messageValue
-} else {
-email.value = ''
-message.textContent = ''
-}
+    const formData = JSON.parse(localStorage.getItem('feedback-form-state')) || {};
+    email.value = formData.email || '';
+    message.textContent = formData.message || '';
 }
 
+
 function inputHandler(event) {
-    event.preventDefault()
-    localStorage.setItem(event.target.name, event.target.value)
+    event.preventDefault();
+    const trimmedValue = event.target.value.trim();
+    localStorage.setItem(event.target.name, trimmedValue);
 }
-function submitHandler(event, emailValue, messageValue) {
-    event.preventDefault()
-    result.email = localStorage.getItem('email')
-    result.message = localStorage.getItem('message')
-    form.reset()
-    message.textContent = ''
-    localStorage.removeItem('email')
-    localStorage.removeItem('message')
-console.log(result)
+
+function submitHandler(event) {
+    event.preventDefault();
+    const result = {
+        email: localStorage.getItem('email'),
+        message: localStorage.getItem('message')
+    };
+    form.reset();
+    localStorage.removeItem('feedback-form-state');
+    console.log(result);
 }
-form.addEventListener('input', inputHandler)
-form.addEventListener('submit', submitHandler)
-window.addEventListener('load', loadHandler)
+
+form.addEventListener('input', inputHandler);
+form.addEventListener('submit', submitHandler);
+window.addEventListener('load', loadHandler);
+
+window.addEventListener('beforeunload', () => {
+    const formData = {
+        email: email.value.trim(),
+        message: message.textContent.trim()
+    };
+    localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+});
