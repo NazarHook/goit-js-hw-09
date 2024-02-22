@@ -11,7 +11,6 @@ function loadHandler(event) {
         emailInput.value = formData.email || '';
         messageTextarea.value = formData.message || '';
     }
-    console.log(formDataString);
 }
 
 function inputHandler(event) {
